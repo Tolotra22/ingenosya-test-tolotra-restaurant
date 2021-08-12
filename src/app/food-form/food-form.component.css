@@ -1,0 +1,16 @@
+form {
+  padding: 5px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    h1{
+        font-size: medium;
+    }
+    h2{
+        font-size: small;
+    }
+}

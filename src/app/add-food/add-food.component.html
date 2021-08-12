@@ -1,0 +1,117 @@
+<h1 class="title">{{ title }}</h1>
+<p></p>
+<div class="form">
+  <form [formGroup]="foodForm" (ngSubmit)="onSubmitForm()">
+    <h2 class="form-title">
+      Veuillez remplir ce champ pour créer le nouveau repas
+    </h2>
+    <!-- NOM -->
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label for="name">*Nom du plât: </mat-label>
+      <input matInput type="text" id="name" formControlName="name" />
+      <mat-error *ngIf="foodForm.get('name')?.hasError('required')"
+        >Veuillez remplir ce champ, c'est obligatoire.</mat-error
+      >
+      <mat-error *ngIf="foodForm.get('name')?.hasError('minlength')"
+        >Le nom doit contenir au moins 3 lettres.</mat-error
+      >
+      <mat-error *ngIf="foodForm.get('name')?.hasError('maxlength')"
+        >Le nom ne doit jamais depasser de 255 lettres.</mat-error
+      >
+      <mat-error *ngIf="foodForm.get('name')?.hasError('pattern')"
+        >Le nom ne doit jamais contenir un nombre.</mat-error
+      >
+    </mat-form-field>
+    <!-- PRICE -->
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label for="price">*Prix: </mat-label>
+      <input matInput type="text" id="price" formControlName="price" />
+      <mat-error *ngIf="foodForm.get('price')?.hasError('pattern')"
+        >Seulement un nombre valid svp !</mat-error
+      >
+      <mat-error *ngIf="foodForm.get('price')?.hasError('required')"
+        >Veuillez mettre le prix !</mat-error
+      >
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <h2 class="add-ingredients">*Ajouter les ingrédients nécessaires</h2>
+    <div formArrayName="ingredients">
+      <div *ngFor="let ingredient of ingredients.controls; let i = index">
+        <p>ingrédient numéro: {{ i + 1 }}</p>
+        <div [formGroupName]="i" class="space-around">
+          <!-- QUANTITY -->
+          <mat-form-field>
+            <mat-label>*Quantités</mat-label>
+            <input matInput type="text" formControlName="quantity" />
+            <mat-error
+              *ngIf="
+                ingredient.get('quantity')?.hasError('required') &&
+                ingredient.get('quantity')?.touched
+              "
+            >
+              Donnez la quantité de l'ingrédient svp!
+            </mat-error>
+            <mat-error *ngIf="ingredient.get('quantity')?.hasError('pattern')"
+              >Seulement un nombre valid svp</mat-error
+            >
+          </mat-form-field>
+          <!-- UNITY -->
+          <mat-form-field>
+            <mat-label>Unité</mat-label>
+            <input matInput type="text" formControlName="unity" />
+            <mat-error *ngIf="ingredient.get('unity')?.hasError('minlength')"
+              >Le nom de l'ingrédient doit contenir au moins une
+              lettre.</mat-error
+            >
+            <mat-error *ngIf="ingredient.get('unity')?.hasError('pattern')"
+              >Seulement des lettres.</mat-error
+            >
+          </mat-form-field>
+          <!-- INGRÉDIENT NAME -->
+          <mat-form-field>
+            <mat-label>*Nom de l'ingrédient</mat-label>
+            <input matInput type="text" formControlName="name" />
+            <mat-error *ngIf="ingredient.get('name')?.hasError('minlength')"
+              >Le nom doit contenir au moins 2
+              lettres.</mat-error
+            >
+            <mat-error
+              *ngIf="
+                ingredient.get('name')?.hasError('required') &&
+                ingredient.get('name')?.touched
+              "
+              >Veuillez remplir ce champ, c'est obligatoire.</mat-error
+            >
+          </mat-form-field>
+          <!-- DELETE ICON -->
+          <button
+            mat-icon-button
+            type="button"
+            color="primary"
+            class="add-one"
+            (click)="addIngredient()"
+          >
+            <mat-icon>plus_one</mat-icon>
+          </button>
+          <button class="delete-one" mat-icon-button [disabled]="i === 0">
+            <mat-icon (click)="removeIngredient(i)">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="space-around">
+      <button
+        class="full-width"
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="foodForm.invalid"
+      >
+        Enregistrer
+      </button>
+      <button class="full-width" (click)="close()" mat-raised-button color="warn" type="reset">
+        Annuler
+      </button>
+    </div>
+  </form>
+</div>

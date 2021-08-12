@@ -1,0 +1,46 @@
+.title {
+  text-align: center;
+}
+
+.form .form-title {
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.space-around {
+  display: flex;
+  justify-content: space-around;
+}
+.button__add_container {
+  display: flex;
+  justify-content: center;
+}
+
+.delete-one{
+    color: #f44336;
+}
+
+@media only screen and (max-width: 768px) {
+  h2 {
+    font-size: medium;
+  }
+
+  .add-ingredients{
+      font-size: small;
+  }
+
+  .space-around{
+      flex-direction: column;
+  }
+
+  .add-one::before{
+    content: 'Ajouter un autre ingrédient  ';
+  }
+
+  .delete-one::before{
+      content: 'Supprimer l\'ingrédient';
+  }
+}

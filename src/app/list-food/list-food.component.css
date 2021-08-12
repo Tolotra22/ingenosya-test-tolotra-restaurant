@@ -1,0 +1,27 @@
+.btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.table {
+  width: 50%;
+  margin: auto;
+}
+
+table {
+  width: 100%;
+  margin: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .table {
+    width: 90%;
+  }
+  h1{
+    font-size: medium;
+  }
+}

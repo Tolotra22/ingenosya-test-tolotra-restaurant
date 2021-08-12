@@ -1,0 +1,51 @@
+<form [formGroup]="foodForm" (ngSubmit)="submit()">
+  <h1>{{ title }}, prix: {{ price | currency }}</h1>
+  <h2>
+    Entez le nombre de <strong>{{ title }}</strong> à faire:
+  </h2>
+  <mat-form-field class="full-width">
+    <mat-label>Nombre de {{ title }}</mat-label>
+    <input type="text" matInput formControlName="quantity" />
+    <mat-error *ngIf="foodForm.get('n')?.hasError('required')"
+      >Veuillez indiquer le nombre de la commande!</mat-error
+    >
+    <mat-error *ngIf="foodForm.get('n')?.hasError('pattern')"
+      >Seulement un entier svp!</mat-error
+    >
+  </mat-form-field>
+  <h2>
+    Veuillez cochez les ingrédients que vous voulez mettre sur la commande :
+  </h2>
+  <mat-list role="listbox" formArrayName="ingredients">
+    <mat-list-item>
+      <mat-error *ngIf="foodForm.get('ingredients')?.hasError('required')"
+        >Veuillez cochez une case svp !</mat-error
+      >
+    </mat-list-item>
+    <mat-list-item *ngFor="let ingredient of ingredients" role="listitem">
+      <mat-checkbox [value]="ingredient.name" (change)="onChange($event)">{{
+        ingredient.name
+      }}</mat-checkbox>
+    </mat-list-item>
+  </mat-list>
+  <div class="space-around">
+    <button
+      class="full-width"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="foodForm.invalid"
+    >
+      Enregistrer
+    </button>
+    <button
+      class="full-width"
+      (click)="close()"
+      mat-raised-button
+      color="warn"
+      type="reset"
+    >
+      Annuler
+    </button>
+  </div>
+</form>
